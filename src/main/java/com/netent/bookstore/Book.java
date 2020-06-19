@@ -12,7 +12,7 @@ import javax.persistence.Id;
 class Book {
     @Id
     @EqualsAndHashCode.Include
-    int isbn;
+    String isbn;
     String title, author;
     float price;
     int quantity;
