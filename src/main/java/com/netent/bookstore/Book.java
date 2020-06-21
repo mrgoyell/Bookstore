@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -18,10 +20,17 @@ class Book {
     @Id
     @EqualsAndHashCode.Include
     @Column(columnDefinition = "varchar(100)")
-    String isbn;
-    String title, author;
-    float price;
-    int quantity;
+    private String isbn;
+
+    @NotBlank(message = "Title is mandatory")
+    private String title;
+
+    @NotBlank(message = "Author is mandatory")
+    private String author;
+
+    @NotNull(message = "No price entered, we don't sell for free :)")
+    private Float price;
+    private int quantity = 1;
 
     Book(String isbn) {
         this.isbn = isbn;

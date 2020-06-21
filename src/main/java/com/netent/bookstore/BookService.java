@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -48,5 +49,30 @@ public class BookService {
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.accepted().body(result);
+    }
+
+    public ResponseEntity<?> addBook(Book book) {
+        Book finalBook = bookRepository.findById(book.getIsbn()).orElse(null);
+        ResponseEntity<?> responseEntity;
+        if (finalBook != null) {
+            finalBook.setQuantity(finalBook.getQuantity() + 1);
+            responseEntity = ResponseEntity.ok(finalBook);
+        } else {
+            finalBook = book;
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(finalBook);
+        }
+        bookRepository.save(finalBook);
+        return responseEntity;
+    }
+
+    public ResponseEntity<?> buyBook(String isbn) {
+        Book book = bookRepository.findById(isbn).orElse(null);
+        if (book == null)
+            return ResponseEntity.notFound().build();
+        book.setQuantity(book.getQuantity() - 1);
+        bookRepository.save(book);
+        if (book.getQuantity() == 0)
+            addBook(book); //in non monolithic setup to be done via rest?
+        return ResponseEntity.accepted().body("Purchased Successfully");
     }
 }
