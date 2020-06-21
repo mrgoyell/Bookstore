@@ -35,4 +35,11 @@ class Book {
     Book(String isbn) {
         this.isbn = isbn;
     }
+
+    public Book(String isbn, String title, String author, float price) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
 }

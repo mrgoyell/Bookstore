@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -31,24 +30,29 @@ public class BookService {
     public ResponseEntity<?> findByMediaCoverage(String isbn) {
         ResponseEntity<?> responseEntity;
         Book book = bookRepository.findById(isbn).orElse(null);
+        ArrayNode arrayNode;
         if (book == null)
             return ResponseEntity.notFound().build();
         try {
             responseEntity = restTemplate.getForEntity(mediaCoverageUrl, ArrayNode.class);
-        } catch (RestClientException e) {
+            arrayNode = (ArrayNode) responseEntity.getBody();
+            if (arrayNode == null)
+                throw new NullPointerException();
+        } catch (Exception e) {
             return ResponseEntity.noContent().build();
         }
         List<String> result = new ArrayList<>();
-        ArrayNode arrayNode = (ArrayNode) responseEntity.getBody();
         for (JsonNode node : arrayNode) {
             String title = node.get("title").asText(), body = node.get("body").asText();
             if (title.contains(book.getTitle()) || body.contains(book.getTitle()))
                 result.add(title);
         }
-        if (result.size() == 0)
-            return ResponseEntity.notFound().build();
+        if (result.size() == 0) {
+            log.info("in no content");
+            return ResponseEntity.noContent().build();
+        }
 
-        return ResponseEntity.accepted().body(result);
+        return ResponseEntity.ok().body(result);
     }
 
     public ResponseEntity<?> addBook(Book book) {
