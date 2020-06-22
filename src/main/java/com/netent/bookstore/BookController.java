@@ -21,7 +21,7 @@ public class BookController {
         return bookService.addBook(book);
     }
 
-    @GetMapping("/search/byParams")
+    @GetMapping("/search")
     ResponseEntity<?> findByIsbnOrTitleLikeOrAuthorLike(@RequestParam String search) {
         return bookService.findByIsbnOrTitleLikeOrAuthorLike(search);
     }
