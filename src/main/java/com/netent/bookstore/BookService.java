@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class BookService {
     String mediaCoverageUrl;
 
 
-    public ResponseEntity<?> findByMediaCoverage(String isbn) {
+    public ResponseEntity<?> getMediaCoverage(String isbn) {
         ResponseEntity<?> responseEntity;
         Book book = bookRepository.findById(isbn).orElse(null);
         ArrayNode arrayNode;
@@ -48,13 +49,13 @@ public class BookService {
                 result.add(title);
         }
         if (result.size() == 0) {
-            log.info("in no content");
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok().body(result);
     }
 
+    @Transactional
     public ResponseEntity<?> addBook(Book book) {
         Book finalBook = bookRepository.findById(book.getIsbn()).orElse(null);
         ResponseEntity<?> responseEntity;
@@ -69,14 +70,19 @@ public class BookService {
         return responseEntity;
     }
 
+    @Transactional
     public ResponseEntity<?> buyBook(String isbn) {
         Book book = bookRepository.findById(isbn).orElse(null);
         if (book == null)
             return ResponseEntity.notFound().build();
-        book.setQuantity(book.getQuantity() - 1);
+        if (book.getQuantity() > 0)
+            book.setQuantity(book.getQuantity() - 1);
+        else
+            return ResponseEntity.noContent().build();
         bookRepository.save(book);
         if (book.getQuantity() == 0)
-            addBook(book); //in non monolithic setup to be done via rest?
+            addBook(book); //in non monolithic setup to be done via rest
         return ResponseEntity.accepted().body("Purchased Successfully");
     }
+
 }

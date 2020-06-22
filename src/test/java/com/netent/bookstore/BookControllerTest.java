@@ -31,23 +31,40 @@ public class BookControllerTest {
     @Test
     void check_addBook() throws Exception {
         Book book = new Book("isbn1", "test", "author", 3.2f);
-        log.info(objectMapper.writeValueAsString(book));
         mockMvc.perform(post("/books/")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isOk());
-        book.setTitle(null);
+
+        book = new Book("", "refer", "author", 3.2f);
         mockMvc.perform(post("/books/")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isBadRequest());
 
-        //tests for author, price validation
+        book = new Book("isbn1", "", "author", 3.2f);
+        mockMvc.perform(post("/books/")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isBadRequest());
+
+        book = new Book("isbn1", "wede", "", 3.2f);
+        mockMvc.perform(post("/books/")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isBadRequest());
+
+        book = new Book("isbn1", "wede", "", null);
+        mockMvc.perform(post("/books/")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isBadRequest());
+
         //test for response matching & verification
     }
 
     @Test
-    void check_mediaCoverage() throws Exception {
+    void check_getMediaCoverage() throws Exception {
         String isbn = "greg", url = "/books/{isbn}/getMediaCoverage";
         mockMvc.perform(get(url, isbn)).andExpect(status().isOk());
     }

@@ -13,4 +13,5 @@ public interface BookRepository extends JpaRepository<Book, String> {
     @RestResource(path = "/byParams")
     @Query(value = "select b from Book b where b.isbn = ?1 or b.title like %?1% or b.author like %?1%")
     List<Book> findByIsbnOrTitleLikeOrAuthorLike(String search);
+
 }

@@ -28,11 +28,13 @@ public class BookRepositoryTest {
         assertNotNull(bookRepository);
     }
 
+/*
     @Test
     void inBuiltUsedMethods() {
         assertEquals(3, bookRepository.findAll().size(), "findAll");
         assertEquals(new Book("dwe", "tesg", "erfre", 2f, 3), bookRepository.findById("dwe").orElse(null), "findById:");
     }
+*/
 
     @Test
     void findByIsbnOrTitleLikeOrAuthorLike() {

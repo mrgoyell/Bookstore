@@ -20,6 +20,7 @@ class Book {
     @Id
     @EqualsAndHashCode.Include
     @Column(columnDefinition = "varchar(100)")
+    @NotBlank(message = "ISBN is mandatory")
     private String isbn;
 
     @NotBlank(message = "Title is mandatory")
@@ -36,7 +37,7 @@ class Book {
         this.isbn = isbn;
     }
 
-    public Book(String isbn, String title, String author, float price) {
+    public Book(String isbn, String title, String author, Float price) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
