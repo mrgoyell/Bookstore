@@ -10,8 +10,8 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "books", path = "books")
 public interface BookRepository extends JpaRepository<Book, String> {
 
-    @RestResource(path = "/byParams")
-    @Query(value = "select b from Book b where b.isbn = ?1 or b.title like %?1% or b.author like %?1%")
-    List<Book> findByIsbnOrTitleLikeOrAuthorLike(String search);
+    @RestResource(exported = false)
+    @Query(value = "select b from Book b where b.title like %:search% or b.isbn like :isbn or b.author like %:search%")
+    List<Book> findByIsbnOrTitleLikeOrAuthorLike(String search, String isbn);
 
 }

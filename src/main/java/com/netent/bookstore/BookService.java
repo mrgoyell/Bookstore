@@ -27,6 +27,12 @@ public class BookService {
     @Value("${media-coverage-api}")
     String mediaCoverageUrl;
 
+    public ResponseEntity<?> findByIsbnOrTitleLikeOrAuthorLike(String search) {
+        List<Book> books = bookRepository.findByIsbnOrTitleLikeOrAuthorLike(search, search);
+        if (books.size() == 0)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(books);
+    }
 
     public ResponseEntity<?> getMediaCoverage(String isbn) {
         ResponseEntity<?> responseEntity;

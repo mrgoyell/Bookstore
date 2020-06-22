@@ -38,13 +38,17 @@ public class BookRepositoryTest {
 
     @Test
     void findByIsbnOrTitleLikeOrAuthorLike() {
-        List<Book> books = bookRepository.findByIsbnOrTitleLikeOrAuthorLike("ew");
+        List<Book> books = bookRepository.findByIsbnOrTitleLikeOrAuthorLike("d", "d");
         Book book = new Book("greg"), book1 = new Book("ywef");
         String messageMismatchValue = "wrong entries";
-        assertEquals(1, books.size(), "size mismatch");
+        assertEquals(2, books.size(), "size mismatch");
         assertTrue(books.contains(book1), messageMismatchValue);
 
-        books = bookRepository.findByIsbnOrTitleLikeOrAuthorLike("klddkssf");
+        books = bookRepository.findByIsbnOrTitleLikeOrAuthorLike("greg", "greg");
+        assertEquals(books.size(), 1);
+        assertTrue(books.contains(book));
+
+        books = bookRepository.findByIsbnOrTitleLikeOrAuthorLike("klddkssf", "klddkssf");
         assertEquals(books.size(), 0);
     }
 

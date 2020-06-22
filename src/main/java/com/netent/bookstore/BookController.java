@@ -21,6 +21,11 @@ public class BookController {
         return bookService.addBook(book);
     }
 
+    @GetMapping("/search/byParams")
+    ResponseEntity<?> findByIsbnOrTitleLikeOrAuthorLike(@RequestParam String search) {
+        return bookService.findByIsbnOrTitleLikeOrAuthorLike(search);
+    }
+
     @GetMapping("/{isbn}/getMediaCoverage")
     ResponseEntity<?> findByMediaCoverage(@PathVariable String isbn) {
         return bookService.getMediaCoverage(isbn);

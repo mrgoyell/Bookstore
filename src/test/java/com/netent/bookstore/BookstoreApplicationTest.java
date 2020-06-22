@@ -34,8 +34,18 @@ class BookstoreApplicationTest {
         bookRepository.saveAll(bookList);
     }
 
+
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    void check_findByIsbnOrTitleLikeOrAuthorLike() {
+        ResponseEntity<?> responseEntity = bookService.findByIsbnOrTitleLikeOrAuthorLike("title");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        responseEntity = bookService.findByIsbnOrTitleLikeOrAuthorLike("klddkssf");
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
     @Test
