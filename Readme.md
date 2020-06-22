@@ -67,7 +67,40 @@ To connect the database with spring boot *JDBC connector* is used and repositori
     Search a book in the bookstore by `isbn`,`title`(partial matching),`author`(partial matching)    
     * Endpoint: `GET /books/search`
     * Params: &search
+    * **Success Response:**
     
+      * **Code:** 200 <br />
+        **Content(sample):** 
+        
+            {
+              "_embedded": {
+                "books": [
+                  {
+                    "title": "refe",
+                    "author": "dew",
+                    "price": 2.45,
+                    "quantity": 4,
+                    "_links": {
+                      "self": {
+                        "href": "http://localhost:8080/books/ywef"
+                      },
+                      "book": {
+                        "href": "http://localhost:8080/books/ywef"
+                      }
+                    }
+                  }
+                ]
+              },
+              "_links": {
+                "self": {
+                  "href": "http://localhost:8080/books/search/byParams?search=ew"
+                }
+              }
+            }
+    * **Error Response:**
+        
+      * **Code:** 204 NO CONTENT <br /> 
+      
 * ### Get Media Coverage
     Searches a book by `isbn` & finds its media coverage from [TypiCode](http://jsonplaceholder.typicode.com/posts) and returns all the titles of the media coverages found
     * **Endpoint**: `GET /books/{isbn}/getMediaCoverage`
@@ -85,11 +118,11 @@ To connect the database with spring boot *JDBC connector* is used and repositori
      
     * **Error Response:**
     
-      * **Code:** 404 NOT FOUND <br />
+      * **Code:** 404 NOT FOUND <br />(Invalid ISBN)
     
       OR
     
-      * **Code:** 204 NO CONTENT <br />
+      * **Code:** 204 NO CONTENT <br />(TypiCode API not available or no media coverage found for the book)
       
 * ### Buy Book
     Buys a copy of the book (if exists) from the bookstore. It will add another copy to the bookstore if last copy of the book was sold.
@@ -98,6 +131,14 @@ To connect the database with spring boot *JDBC connector* is used and repositori
     
       * **Code:** 202 ACCEPTED <br />
         **Content:** <code>"Purchased Successfully"</code>
+    
+    * **Error Response:**
+    
+      * **Code:** 404 NOT FOUND <br />(Invalid ISBN)
+    
+      OR
+    
+      * **Code:** 204 NO CONTENT <br /> (Sold Out)
 
 ## Deployment
 The application can be run as a docker container. Maintained docker repository can be found at `mrgoyell/bookstore`
@@ -105,7 +146,7 @@ Currently the following tags are supported:
 * **latest**: Will pull the latest image on the master branch.
 
 ### Execution
-After installing docker on your system/server. The image can be pulled by:
+After [installing docker](https://docs.docker.com/get-docker/) on your system/server. The image can be pulled by:
 
 <code>docker pull mrgoyell/bookstore:<supported-tag></code>
 
