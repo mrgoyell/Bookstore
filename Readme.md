@@ -3,6 +3,7 @@
 A basic bookstore management system. 
 
 ##Developement
+
 ### Languages & Frameworks
 The application has been developed in ***java*** using **Spring Boot** framework. Some *Rest APIs* are manually created whereas others are exposed using the ***Spring Data Rest*** library. By default the application has been exposed to **Port 8080**. This can be modified from the ***application.properties***
 
@@ -14,7 +15,9 @@ To connect the database with spring boot *JDBC connector* is used and repositori
 * **MYSQL**: This can connect to the local database created on *MYSQL*. By default it expects a database by the name of **Bookstore** on **Port 3306**. This can be changed from ***application-mysql.properties***
 
 ##Entities
+
 ### Book
+
 * Isbn ~ String ~ ID
 * Title ~ String ~ Not Empty
 * Author ~ String ~ Not Empty
@@ -22,7 +25,9 @@ To connect the database with spring boot *JDBC connector* is used and repositori
 * Quantity ~ Integer ~ Default:1
 
 ##API Services
+
 * ###Add Book
+
     Adds Book to the bookstore      
     * **Endpoint**: `POST /books`
     * **Request Body** (sample):   
@@ -64,11 +69,13 @@ To connect the database with spring boot *JDBC connector* is used and repositori
               }</code>
            
 * ###Search Book 
+
     Search a book in the bookstore by `isbn`,`title`(partial matching),`author`(partial matching)    
     * Endpoint: `GET /books/search`
     * Params: &search
     
 * ###Get Media Coverage
+
     Searches a book by `isbn` & finds its media coverage from [TypiCode](http://jsonplaceholder.typicode.com/posts) and returns all the titles of the media coverages found
     * **Endpoint**: `GET /books/{isbn}/getMediaCoverage`
     * **Success Response:**
@@ -100,11 +107,13 @@ To connect the database with spring boot *JDBC connector* is used and repositori
         **Content:** <code>"Purchased Successfully"</code>
 
 ##Deployment
+
 The application can be run as a docker container. Maintained docker repository can be found at `mrgoyell/bookstore`
 Currently the following tags are supported:
 * **latest**: Will pull the latest image on the master branch.
 
 ###Execution
+
 After installing docker on your system/server. The image can be pulled by:
 
 <code>docker pull mrgoyell/bookstore:<supported-tag></code>
