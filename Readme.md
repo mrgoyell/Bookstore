@@ -8,7 +8,7 @@ The application has been developed in ***java*** using **Spring Boot** framework
 
 ### Database
 To connect the database with spring boot *JDBC connector* is used and repositories are extended from ***Spring Data JPA***. The application supports the use of 2 separate databases via switching profile:
-* **H2** : This is an in memory database and any new data stored will be cleared at the end of execution. 
+* **H2 (current-default)** : This is an in memory database and any new data stored will be cleared at the end of execution. 
            Database can be set be setting the *active-profile to **test***. Its properties can be modified from ***application-test.properties***. Default entries in the database have been added in ***Data.sql*** it can be modified.**(Note: Modifying this file might affect some repository unit tests created)**
 
 * **MYSQL**: This can connect to the local database created on *MYSQL*. By default it expects a database by the name of **Bookstore** on **Port 3306**. This can be changed from ***application-mysql.properties***
@@ -65,7 +65,7 @@ To connect the database with spring boot *JDBC connector* is used and repositori
            
 * ### Search Book 
     Search a book in the bookstore by `isbn`,`title`(partial matching),`author`(partial matching)    
-    * Endpoint: `GET /books/search`
+    * Endpoint: `GET /books`
     * Params: &search
     * **Success Response:**
     

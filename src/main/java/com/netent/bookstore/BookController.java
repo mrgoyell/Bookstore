@@ -16,12 +16,12 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @PostMapping("/")
+    @PostMapping
     ResponseEntity<?> addBook(@Valid @RequestBody Book book) {
         return bookService.addBook(book);
     }
 
-    @GetMapping("/search")
+    @GetMapping
     ResponseEntity<?> findByIsbnOrTitleLikeOrAuthorLike(@RequestParam String search) {
         return bookService.findByIsbnOrTitleLikeOrAuthorLike(search);
     }
