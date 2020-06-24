@@ -4,7 +4,7 @@ A basic bookstore management system.
 
 ## Developement
 ### Languages & Frameworks
-The application has been developed in ***java*** using **Spring Boot** framework. Some *Rest APIs* are manually created whereas others are exposed using the ***Spring Data Rest*** library. By default the application has been exposed to **Port 8080**. This can be modified from the ***application.properties***
+The application has been developed in ***java*** using **Spring Boot** framework for creating *Rest APIs*. By default the application has been exposed to **Port 8080**. This can be modified from the ***application.properties***
 
 ### Database
 To connect the database with spring boot *JDBC connector* is used and repositories are extended from ***Spring Data JPA***. The application supports the use of 2 separate databases via switching profile:
