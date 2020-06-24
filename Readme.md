@@ -107,7 +107,7 @@ To connect the database with spring boot *JDBC connector* is used and repositori
     * **Success Response:**
     
       * **Code:** 200 <br />
-        **Content:** 
+        **Content**(sample): 
     
             [
                 "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
@@ -152,6 +152,6 @@ After [installing docker](https://docs.docker.com/get-docker/) on your system/se
 
 After successfully pulling the image you can run the application by:
 
-<code>sudo docker run -p 8080:8080 -d -t bookstore:<supported-tag></code>
+<code>sudo docker run -p 8080:8080 -d -t mrgoyell/bookstore:<supported-tag></code>
  
 
